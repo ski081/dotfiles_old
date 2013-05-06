@@ -1,0 +1,114 @@
+# Processes
+alias tu='top -o cpu' # cpu
+alias tm='top -o vsize' # memory
+
+alias lsa="ls -laGh"
+
+alias reload="source ~/bin/dotfiles/bash/aliases"
+alias reloadall="source ~/.bashrc"
+alias ea="subl ~/bin/dotfiles/bash/aliases && reload"
+alias nn="subl -n"
+alias dbdevdir="cd ~/Dropbox/dev"
+alias ppdev="cd ~/Dropbox/dev/PayPalBanking"
+alias blog="cd ~/Dropbox/octopress"
+alias fm="cd ~/Dropbox/dev/FeverMonitor"
+alias f='open -a Finder ./'
+alias devdir="cd ~/Library/Developer/Projects/iOS"
+alias sc="cd ~/Library/Developer/Projects/iOS/SalesCoach"
+alias ax="chmod a+x"
+
+# Quick way to rebuild the Launch Services database and get rid
+# of duplicates in the Open With submenu.
+alias fixopenwith='/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user'
+
+function take(){
+	mkdir $1
+	cd $1
+}
+
+function selected(){
+	osascript -e 	'tell application "finder"
+						set tf to selection
+						set tl to ""
+						repeat with f in tf
+							set tl to tl & "\"" & POSIX path of (f as alias) & "\" "
+						end repeat
+					end tell'
+}
+
+# cd to the path of the front Finder window
+cdf() {
+	target=`osascript -e 'tell application "Finder" to if (count of Finder windows) > 0 then get POSIX path of (target of front Finder window as text)'`
+	if [ "$target" != "" ]; then
+		cd "$target"; pwd
+	else
+		echo 'No Finder window found' >&2
+	fi
+}
+
+# ls better
+alias la="ls -aF"
+alias ld="ls -ld"
+alias ll="ls -l"
+alias lt='ls -At1 && echo "------Oldest--"'
+alias ltr='ls -Art1 && echo "------Newest--"'
+
+## GIT
+function gg(){
+	git commit -v -a -m "$*"
+}
+
+alias gs="git status"
+alias ga='git add '
+alias gb='git branch '
+alias gc='git commit'
+alias gd='git diff'
+alias go='git checkout '
+alias gk='gitk --all&'
+alias gx='gitx --all'
+alias gpm="git push origin master"
+# Remove git from a project
+alias ungit="find . -name '.git' -exec rm -rf {} \;"
+
+alias got='git '
+alias get='git '
+
+# Commit to git and log to Day One
+function gca(){
+  msg=$*
+  path=$(pwd)
+  ~/Scripts/LogtoDayOne.rb "@${path##*/} $msg"
+  git commit -am "$msg"
+}
+
+## Open current XCode workspace
+function xc(){
+	result=${PWD##*/}
+	# result=${PWD}
+	# printf '%s\n' "$result"
+	workspace="$result.xcworkspace"
+
+	if [ -d $workspace ]; then
+		open "$workspace"
+		# $echo "Opening $workspace"
+	fi
+}
+
+# List contents of a zip archive
+# ls archives (inspired by `extract`)
+lsz() {
+	if [ $# -ne 1 ]
+	then
+		echo "lsz filename.[tar,tgz,gz,zip,etc]"
+		return 1
+	fi
+	if [ -f $1 ] ; then
+		case $1 in
+			*.tar.bz2|*.tar.gz|*.tar|*.tbz2|*.tgz) tar tvf $1;;
+			*.zip)  unzip -l $1;;
+			*)      echo "'$1' unrecognized." ;;
+		esac
+	else
+		echo "'$1' is not a valid file"
+	fi
+}
