@@ -1,2 +1,15 @@
-export EDITOR="mate -w"
-export PATH=/usr/local/bin:$PATH:~/bin
+export PATH=~/bin:$PATH
+export PATH=/usr/local/bin:$PATH
+
+export GROOVY_HOME=/usr/local/opt/groovy/libexec
+export GRAILS_HOME=/usr/local/bin/grails
+
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_25.jdk/Contents/Home
+export PATH=${JAVA_HOME}/bin:$PATH
+export PATH=${GRAILS_HOME}/bin:$PATH
+
+# The default Java OS X text encoding is ISO-8859-1, but everything we do should be UTF-8
+export JAVA_OPTS="$JAVA_OPTS -Djava.encoding=UTF-8"
+
+# Maven opts
+export MAVEN_OPTS="-Xmx512m -XX:MaxPermSize=512m $MAVEN_OPTS"

@@ -15,6 +15,7 @@ alias fm="cd ~/Dropbox/dev/FeverMonitor"
 alias f='open -a Finder ./'
 alias devdir="cd ~/Library/Developer/Projects/iOS"
 alias sc="cd ~/Library/Developer/Projects/iOS/SalesCoach"
+alias gbt="cd ~/Library/Developer/Projects/iOS/GetBetter"
 alias ax="chmod a+x"
 
 # Quick way to rebuild the Launch Services database and get rid
@@ -50,6 +51,7 @@ cdf() {
 alias la="ls -aF"
 alias ld="ls -ld"
 alias ll="ls -l"
+alias lal="ls -al"
 alias lt='ls -At1 && echo "------Oldest--"'
 alias ltr='ls -Art1 && echo "------Newest--"'
 
@@ -59,6 +61,7 @@ function gg(){
 }
 
 alias gs="git status"
+alias gsb="git status -sb"
 alias ga='git add '
 alias gb='git branch '
 alias gc='git commit'
@@ -112,3 +115,32 @@ lsz() {
 		echo "'$1' is not a valid file"
 	fi
 }
+
+function wopen { # via https://gist.github.com/coryalder/5609996
+  WORKSPACE="${PWD##*/}.xcworkspace"
+  PROJECT="${PWD##*/}.xcodeproj"
+  if [ -a $WORKSPACE ]; then
+    open $WORKSPACE;
+  elif [ -a $PROJECT ]; then
+    open $PROJECT;
+  else
+    echo "No workspace or project found.";
+  fi
+} # open Xcode workspace/project of same name as current directory.
+
+# Fix Finder 'Open With' duplicates
+alias fixow='/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -r -domain local -domain user;killall Finder;echo "Open With has been rebuilt, Finder will relaunch"'
+
+# List pretty version of PATH
+function path(){
+    old=$IFS
+    IFS=:
+    printf "%s\n" $PATH
+    IFS=$old
+} 
+
+# Recursively Delete cached Maven dependencies
+function purgemvn(){
+	rm -rf ~/.m2/repository/
+}
+
