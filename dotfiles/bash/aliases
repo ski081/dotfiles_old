@@ -14,9 +14,13 @@ alias blog="cd ~/Dropbox/octopress"
 alias fm="cd ~/Dropbox/dev/FeverMonitor"
 alias f='open -a Finder ./'
 alias devdir="cd ~/Library/Developer/Projects/iOS"
+alias tansler="cd ~/Library/Developer/Projects/iOS/tansler-ios"
 alias sc="cd ~/Library/Developer/Projects/iOS/SalesCoach"
 alias gbt="cd ~/Library/Developer/Projects/iOS/GetBetter"
+alias comms="cd ~/dev/credit-ops-communication-services"
+alias roles="cd ~/dev/credit-ops-role-services"
 alias ax="chmod a+x"
+alias ij="open -a /Applications/IntelliJ\ IDEA\ 11.app/Contents/MacOS/idea"
 
 # Quick way to rebuild the Launch Services database and get rid
 # of duplicates in the Open With submenu.
@@ -137,10 +141,9 @@ function path(){
     IFS=:
     printf "%s\n" $PATH
     IFS=$old
-} 
+}
 
 # Recursively Delete cached Maven dependencies
 function purgemvn(){
 	rm -rf ~/.m2/repository/
 }
-
